@@ -4,13 +4,20 @@ import authRouter from './routes/auth.routes.js';
 import userRouter from './routes/user.routes.js';
 import SubscriptionRouter from './routes/subscription.routes.js';
 import connectDB from './Database/mongodb.js';
+import errorMiddleware from './middlewares/error.middleware.js';
+import cookieParser from 'cookie-parser';
 
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/subscription', SubscriptionRouter);
+
+app.use(errorMiddleware);
 
 app.get('/', (req, res)=>{
    res.send('welcome to Subscription Tracker API!'); 
