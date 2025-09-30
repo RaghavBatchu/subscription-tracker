@@ -1,16 +1,13 @@
 import { Router } from "express";   
+import { getUser, getUsers } from "../controllers/user.controller.js";
+import { get } from "mongoose";
+import authorize from "../middlewares/auth.middleware.js";
 
 const userRouter = Router();
 
-userRouter.get('/', (req, res) => {
-    // Handle login logic here
-    res.send({title: 'Get all users' });
-});
+userRouter.get('/',getUsers);
 
-userRouter.get('/:id', (req, res) => {
-    // Handle login logic here
-    res.send({title: 'Get user details' });
-});
+userRouter.get('/:id', authorize, getUser);
 
 userRouter.post('/', (req, res) => {
     // Handle login logic here
