@@ -1,42 +1,36 @@
 import { Router } from "express";
+import authorize from "../middlewares/auth.middleware.js";
+import {
+  createSubscription,
+  getAllSubscriptions,
+  getSubscriptionById,
+  updateSubscription,
+  deleteSubscription,
+  getUserSubscriptions,
+  cancelSubscription
+} from "../controllers/subscription.controller.js";
 
 const SubscriptionRouter = Router();
 
-SubscriptionRouter.get('/', (req, res) => {
-    // Handle login logic here
-    res.send({title: 'Get all subscriptions' });
-});
+// Get all subscriptions
+SubscriptionRouter.get('/', getAllSubscriptions);
 
-SubscriptionRouter.get('/:id', (req, res) => {
-    // Handle login logic here
-    res.send({title: 'Get subscription details' });
-});
+// Get subscription details by ID
+SubscriptionRouter.get('/:id', getSubscriptionById);
 
-SubscriptionRouter.post('/', (req, res) => {
-    // Handle login logic here
-    res.send({title: 'Create a new subscription' });
-}); 
+// Create a subscription (requires authorization)
+SubscriptionRouter.post('/', authorize, createSubscription);
 
-SubscriptionRouter.put('/:id', (req, res) => {
-    // Handle login logic here
-    res.send({title: 'Update the subscription ' });
-});
+// Update a subscription by ID
+SubscriptionRouter.put('/:id', updateSubscription);
 
-SubscriptionRouter.delete('/', (req, res) => {
-    // Handle login logic here
-    res.send({title: 'Delete the subscription' });
-});
+// Delete a subscription by ID
+SubscriptionRouter.delete('/:id', deleteSubscription);
 
-SubscriptionRouter.get('/user/:id', (req, res) => {
-    // Handle login logic here
-    res.send({title: 'Get all subscriptions for a user' });
-});
+// Get all subscriptions for a specific user
+SubscriptionRouter.get('/user/:id', getUserSubscriptions);
 
-SubscriptionRouter.put('/cancel/:id', (req, res) => {
-    // Handle login logic here
-    res.send({title: 'Cancel a subscription' });
-});
-
-
+// Cancel a subscription by ID
+SubscriptionRouter.put('/cancel/:id', cancelSubscription);
 
 export default SubscriptionRouter;
